@@ -7,19 +7,45 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <style>
-        html { scroll-behavior: smooth; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        .animate-float { animation: float 5s ease-in-out infinite; }
-        @keyframes fadeIn { to { opacity: 1; } }
-        .animate-fade-in { animation: fadeIn 1.5s ease forwards; opacity: 0; }
-        
-        /* Custom hover effect for the Sample Pics button */
+   <style>
+    html { scroll-behavior: smooth; }
+
+    /* 1. Optimized Float: Added will-change for performance */
+    @keyframes float { 
+        0%, 100% { transform: translateY(0); } 
+        50% { transform: translateY(-15px); } 
+    }
+    .animate-float { 
+        animation: float 5s ease-in-out infinite; 
+        will-change: transform; 
+    }
+
+    /* 2. Safer Fade-In */
+    @keyframes fadeIn { 
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); } 
+    }
+    .animate-fade-in { 
+        animation: fadeIn 1s ease-out forwards; 
+    }
+
+    /* 3. Better Button Hover (PC Only) */
+    @media (hover: hover) {
         .btn-sample:hover {
-            box-shadow: 0 10px 15px -3px rgba(234, 88, 12, 0.3);
+            box-shadow: 0 10px 15px -3px rgba(234, 88, 12, 0.4);
             transform: translateY(-2px);
+            transition: all 0.3s ease;
         }
-    </style>
+    }
+
+    /* 4. Mobile Button Fix: No transform on tap to prevent "sticky" hover */
+    @media (hover: none) {
+        .btn-sample:active {
+            background-color: #ea580c;
+            color: white;
+        }
+    }
+</style>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans">
